@@ -28,7 +28,7 @@
 
 @implementation NSMutableURLRequest (OAParameterAdditions)
 
-- (NSArray *)parameters 
+- (NSArray *)SZParameters 
 {
     NSString *encodedParameters;
 	BOOL shouldfree = NO;
@@ -69,7 +69,7 @@
     return [requestParameters autorelease];
 }
 
-- (void)setParameters:(NSArray *)parameters 
+- (void)setSZParameters:(NSArray *)parameters 
 {
     NSMutableString *encodedParameterPairs = [NSMutableString stringWithCapacity:256];
     

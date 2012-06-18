@@ -29,7 +29,7 @@
 
 @interface NSMutableURLRequest (OAParameterAdditions)
 
-- (NSArray *)parameters;
-- (void)setParameters:(NSArray *)parameters;
+- (NSArray *)SZParameters;
+- (void)setSZParameters:(NSArray *)parameters;
 
 @end
