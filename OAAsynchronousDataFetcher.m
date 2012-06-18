@@ -130,11 +130,11 @@
     if (contentType && [contentType rangeOfString:@"charset=utf-8"].location != NSNotFound) {
         encoding = NSUTF8StringEncoding;
     }
-    NSString *responseString = [[[NSString alloc] initWithData:responseData encoding:encoding] autorelease];
+//    NSString *responseString = [[[NSString alloc] initWithData:responseData encoding:encoding] autorelease];
     
 	[delegate performSelector:didFinishSelector
 				   withObject:ticket
-				   withObject:responseString];
+				   withObject:responseData];
 	
 	[ticket release];
 }
