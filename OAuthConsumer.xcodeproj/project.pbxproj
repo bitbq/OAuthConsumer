@@ -33,7 +33,6 @@
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		AACEDABD158FF61A0024EC43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACEDABC158FF61A0024EC43 /* Foundation.framework */; };
-		AACEDAC3158FF61A0024EC43 /* OAuthConsumer_iOS.m in Sources */ = {isa = PBXBuildFile; fileRef = AACEDAC2158FF61A0024EC43 /* OAuthConsumer_iOS.m */; };
 		AACEDAC8158FF66A0024EC43 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = FC53ABB20CD99348001B1B99 /* OAuthConsumer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AACEDAC9158FF66A0024EC43 /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = FCAAF07E0CC95E6A00C52F82 /* OAToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AACEDACA158FF66A0024EC43 /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAAF07F0CC95E6A00C52F82 /* OAToken.m */; };
@@ -155,8 +154,6 @@
 		AACEDABA158FF61A0024EC43 /* libOAuthConsumer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libOAuthConsumer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		AACEDABC158FF61A0024EC43 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		AACEDAC0158FF61A0024EC43 /* OAuthConsumer iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OAuthConsumer iOS-Prefix.pch"; sourceTree = "<group>"; };
-		AACEDAC1158FF61A0024EC43 /* OAuthConsumer_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer_iOS.h; sourceTree = "<group>"; };
-		AACEDAC2158FF61A0024EC43 /* OAuthConsumer_iOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAuthConsumer_iOS.m; sourceTree = "<group>"; };
 		AADF7CEB158FFB150042B55F /* hide_symbols_oauth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hide_symbols_oauth.h; sourceTree = SOURCE_ROOT; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		FC53ABB20CD99348001B1B99 /* OAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer.h; sourceTree = "<group>"; };
@@ -362,8 +359,6 @@
 		AACEDABE158FF61A0024EC43 /* OAuthConsumer iOS */ = {
 			isa = PBXGroup;
 			children = (
-				AACEDAC1158FF61A0024EC43 /* OAuthConsumer_iOS.h */,
-				AACEDAC2158FF61A0024EC43 /* OAuthConsumer_iOS.m */,
 				AACEDABF158FF61A0024EC43 /* Supporting Files */,
 			);
 			path = "OAuthConsumer iOS";
@@ -622,7 +617,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AACEDAC3158FF61A0024EC43 /* OAuthConsumer_iOS.m in Sources */,
 				AACEDACA158FF66A0024EC43 /* OAToken.m in Sources */,
 				AACEDACC158FF66A0024EC43 /* OAConsumer.m in Sources */,
 				AACEDACE158FF66A0024EC43 /* OAMutableURLRequest.m in Sources */,
