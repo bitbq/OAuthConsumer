@@ -32,6 +32,9 @@
 		4571A8B70DAC52D800E2A30E /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 4571A8840DAC519C00E2A30E /* Base64Transcoder.c */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
+		AAB5E46F15903ABD00D3EBDF /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAAF3CB0CCA69D600C52F82 /* NSMutableURLRequest+Parameters.m */; };
+		AAB5E47115903ABF00D3EBDF /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = FC98DF560CD19A7C00453F6C /* NSURL+Base.m */; };
+		AAB5E47215903AC200D3EBDF /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = FCAAF35F0CC9E73200C52F82 /* NSString+URLEncoding.m */; };
 		AACEDABD158FF61A0024EC43 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACEDABC158FF61A0024EC43 /* Foundation.framework */; };
 		AACEDAC8158FF66A0024EC43 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = FC53ABB20CD99348001B1B99 /* OAuthConsumer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AACEDAC9158FF66A0024EC43 /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = FCAAF07E0CC95E6A00C52F82 /* OAToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -627,6 +630,9 @@
 				AACEDAD8158FF66A0024EC43 /* OADataFetcher.m in Sources */,
 				AACEDADA158FF66A0024EC43 /* OAAsynchronousDataFetcher.m in Sources */,
 				AACEDAF3158FF8610024EC43 /* Base64Transcoder.c in Sources */,
+				AAB5E46F15903ABD00D3EBDF /* NSMutableURLRequest+Parameters.m in Sources */,
+				AAB5E47115903ABF00D3EBDF /* NSURL+Base.m in Sources */,
+				AAB5E47215903AC200D3EBDF /* NSString+URLEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
