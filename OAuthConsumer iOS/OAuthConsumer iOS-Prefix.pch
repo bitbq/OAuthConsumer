@@ -3,5 +3,6 @@
 //
 
 #ifdef __OBJC__
+#import "hide_symbols_oauth.h"
     #import <Foundation/Foundation.h>
 #endif

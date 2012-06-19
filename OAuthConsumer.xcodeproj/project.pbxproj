@@ -60,6 +60,7 @@
 		AACEDAF2158FF83B0024EC43 /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = FC98DD570CD15F0400453F6C /* OASignatureProviding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AACEDAF3158FF8610024EC43 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 4571A8840DAC519C00E2A30E /* Base64Transcoder.c */; };
 		AACEDAF4158FF88E0024EC43 /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4571A8850DAC519C00E2A30E /* Base64Transcoder.h */; };
+		AADF7CEC158FFB150042B55F /* hide_symbols_oauth.h in Headers */ = {isa = PBXBuildFile; fileRef = AADF7CEB158FFB150042B55F /* hide_symbols_oauth.h */; };
 		FC37EA3C0CDA42A00036EF8E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		FC53ABB30CD99348001B1B99 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = FC53ABB20CD99348001B1B99 /* OAuthConsumer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FC6C10C40CD9998400A85842 /* OARequestParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = FCAAF3BB0CC9F06C00C52F82 /* OARequestParameter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -156,6 +157,7 @@
 		AACEDAC0158FF61A0024EC43 /* OAuthConsumer iOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OAuthConsumer iOS-Prefix.pch"; sourceTree = "<group>"; };
 		AACEDAC1158FF61A0024EC43 /* OAuthConsumer_iOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer_iOS.h; sourceTree = "<group>"; };
 		AACEDAC2158FF61A0024EC43 /* OAuthConsumer_iOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OAuthConsumer_iOS.m; sourceTree = "<group>"; };
+		AADF7CEB158FFB150042B55F /* hide_symbols_oauth.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hide_symbols_oauth.h; sourceTree = SOURCE_ROOT; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		FC53ABB20CD99348001B1B99 /* OAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer.h; sourceTree = "<group>"; };
 		FC6C126A0CD9AF6600A85842 /* OATestServer.rb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.ruby; path = OATestServer.rb; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 		AACEDABF158FF61A0024EC43 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				AADF7CEB158FFB150042B55F /* hide_symbols_oauth.h */,
 				AACEDAC0158FF61A0024EC43 /* OAuthConsumer iOS-Prefix.pch */,
 			);
 			name = "Supporting Files";
@@ -471,6 +474,7 @@
 				AACEDAF1158FF8330024EC43 /* NSURL+Base.h in Headers */,
 				AACEDAF2158FF83B0024EC43 /* OASignatureProviding.h in Headers */,
 				AACEDAF4158FF88E0024EC43 /* Base64Transcoder.h in Headers */,
+				AADF7CEC158FFB150042B55F /* hide_symbols_oauth.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

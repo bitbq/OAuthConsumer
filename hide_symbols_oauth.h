@@ -1,0 +1,13 @@
+#define OAAsynchronousDataFetcher SZOAAsynchronousDataFetcher
+#define OAConsumer SZOAConsumer
+#define OADataFetcher SZOADataFetcher
+#define OAHMAC_SHA1SignatureProvider SZOAHMAC_SHA1SignatureProvider
+#define OAMutableURLRequest SZOAMutableURLRequest
+#define OAPlaintextSignatureProvider SZOAPlaintextSignatureProvider
+#define OARequestParameter SZOARequestParameter
+#define OAServiceTicket SZOAServiceTicket
+#define OAToken SZOAToken
+#define OASignatureProviding SZOASignatureProviding
+#define OAParameterAdditions SZOAParameterAdditions
+#define OAURLEncodingAdditions SZOAURLEncodingAdditions
+#define OABaseAdditions SZOABaseAdditions
