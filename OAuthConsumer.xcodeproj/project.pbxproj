@@ -62,7 +62,7 @@
 		AACEDAF2158FF83B0024EC43 /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = FC98DD570CD15F0400453F6C /* OASignatureProviding.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AACEDAF3158FF8610024EC43 /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 4571A8840DAC519C00E2A30E /* Base64Transcoder.c */; };
 		AACEDAF4158FF88E0024EC43 /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 4571A8850DAC519C00E2A30E /* Base64Transcoder.h */; };
-		AADF7CEC158FFB150042B55F /* hide_symbols_oauth.h in Headers */ = {isa = PBXBuildFile; fileRef = AADF7CEB158FFB150042B55F /* hide_symbols_oauth.h */; };
+		AADF7CEC158FFB150042B55F /* hide_symbols_oauth.h in Headers */ = {isa = PBXBuildFile; fileRef = AADF7CEB158FFB150042B55F /* hide_symbols_oauth.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FC37EA3C0CDA42A00036EF8E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		FC53ABB30CD99348001B1B99 /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = FC53ABB20CD99348001B1B99 /* OAuthConsumer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FC6C10C40CD9998400A85842 /* OARequestParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = FCAAF3BB0CC9F06C00C52F82 /* OARequestParameter.h */; settings = {ATTRIBUTES = (Public, ); }; };
