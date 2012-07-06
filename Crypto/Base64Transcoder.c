@@ -29,6 +29,8 @@
 
 #include <math.h>
 #include <string.h>
+#import "hide_symbols_oauth.h"
+
 
 const u_int8_t kBase64EncodeTable[64] = {
 	/*  0 */ 'A',	/*  1 */ 'B',	/*  2 */ 'C',	/*  3 */ 'D', 
@@ -101,23 +103,23 @@ const u_int8_t kBits_11000000 = 0xC0;
 const u_int8_t kBits_11110000 = 0xF0;
 const u_int8_t kBits_11111100 = 0xFC;
 
-size_t SZEstimateBas64EncodedDataSize(size_t inDataSize)
+size_t EstimateBas64EncodedDataSize(size_t inDataSize)
 {
 size_t theEncodedDataSize = (int)ceil(inDataSize / 3.0) * 4;
 theEncodedDataSize = theEncodedDataSize / 72 * 74 + theEncodedDataSize % 72;
 return(theEncodedDataSize);
 }
 
-size_t SZEstimateBas64DecodedDataSize(size_t inDataSize)
+size_t EstimateBas64DecodedDataSize(size_t inDataSize)
 {
 size_t theDecodedDataSize = (int)ceil(inDataSize / 4.0) * 3;
 //theDecodedDataSize = theDecodedDataSize / 72 * 74 + theDecodedDataSize % 72;
 return(theDecodedDataSize);
 }
 
-bool SZBase64EncodeData(const void *inInputData, size_t inInputDataSize, char *outOutputData, size_t *ioOutputDataSize)
+bool Base64EncodeData(const void *inInputData, size_t inInputDataSize, char *outOutputData, size_t *ioOutputDataSize)
 {
-size_t theEncodedDataSize = SZEstimateBas64EncodedDataSize(inInputDataSize);
+size_t theEncodedDataSize = EstimateBas64EncodedDataSize(inInputDataSize);
 if (*ioOutputDataSize < theEncodedDataSize)
 	return(false);
 *ioOutputDataSize = theEncodedDataSize;
@@ -163,11 +165,11 @@ else if (theRemainingBytes == 2)
 return(true);
 }
 
-bool SZBase64DecodeData(const void *inInputData, size_t inInputDataSize, void *ioOutputData, size_t *ioOutputDataSize)
+bool Base64DecodeData(const void *inInputData, size_t inInputDataSize, void *ioOutputData, size_t *ioOutputDataSize)
 {
 memset(ioOutputData, '.', *ioOutputDataSize);
 
-size_t theDecodedDataSize = SZEstimateBas64DecodedDataSize(inInputDataSize);
+size_t theDecodedDataSize = EstimateBas64DecodedDataSize(inInputDataSize);
 if (*ioOutputDataSize < theDecodedDataSize)
 	return(false);
 *ioOutputDataSize = 0;
