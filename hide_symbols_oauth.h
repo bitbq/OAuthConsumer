@@ -34,3 +34,5 @@
 #define kBits_11000000 OAP(kBits_11000000)
 #define kBits_11110000 OAP(kBits_11110000)
 #define kBits_11111100 OAP(kBits_11111100)
+#define setOAParameters OAP(setOAParameters)
+#define OAParameters OAP(OAParameters)
