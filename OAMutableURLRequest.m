@@ -196,7 +196,7 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 
 - (void)_generateTimestamp 
 {
-    timestamp = [[NSString alloc] initWithFormat:@"%d", time(NULL)];
+    timestamp = [[NSString alloc] initWithFormat:@"%ld", time(NULL)];
 }
 
 - (void)_generateNonce 
