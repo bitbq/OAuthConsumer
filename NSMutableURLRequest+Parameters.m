@@ -31,23 +31,17 @@
 - (NSArray *)parameters 
 {
     NSString *encodedParameters;
-	BOOL shouldfree = NO;
     
     if ([[self HTTPMethod] isEqualToString:@"GET"] || [[self HTTPMethod] isEqualToString:@"DELETE"]) 
         encodedParameters = [[self URL] query];
 	else 
 	{
         // POST, PUT
-		shouldfree = YES;
         encodedParameters = [[NSString alloc] initWithData:[self HTTPBody] encoding:NSASCIIStringEncoding];
     }
     
     if ((encodedParameters == nil) || ([encodedParameters isEqualToString:@""]))
 	{
-		if (shouldfree) 
-		{
-			[encodedParameters release];
-		}
 		return nil;
 	}
     
@@ -63,10 +57,8 @@
     }
     
 	// Cleanup
-	if (shouldfree)
-		[encodedParameters release];
 	
-    return [requestParameters autorelease];
+    return requestParameters;
 }
 
 - (void)setParameters:(NSArray *)parameters 
@@ -90,7 +82,7 @@
         // POST, PUT
         NSData *postData = [encodedParameterPairs dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
         [self setHTTPBody:postData];
-        [self setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
+        [self setValue:[NSString stringWithFormat:@"%lu", (unsigned long)[postData length]] forHTTPHeaderField:@"Content-Length"];
         [self setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     }
 }

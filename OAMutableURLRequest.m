@@ -28,8 +28,8 @@
 
 
 @interface OAMutableURLRequest ()
-@property(retain) NSString *nonce;
-@property(retain) NSString *timestamp;
+@property(strong) NSString *nonce;
+@property(strong) NSString *timestamp;
 
 - (void)_generateTimestamp;
 - (void)_generateNonce;
@@ -51,24 +51,24 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 					  cachePolicy:NSURLRequestReloadIgnoringCacheData
 				  timeoutInterval:10.0])
 	{    
-		consumer = [aConsumer retain];
+		consumer = aConsumer;
 		
 		// empty token for Unauthorized Request Token transaction
 		if (aToken == nil)
 			token = [[OAToken alloc] init];
 		else
-			token = [aToken retain];
+			token = aToken;
 		
 		if (aRealm == nil)
-			realm = [[NSString alloc] initWithString:@""];
+			realm = @"";
 		else 
-			realm = [aRealm retain];
+			realm = aRealm;
 		
 		// default to HMAC-SHA1
 		if (aProvider == nil)
 			signatureProvider = [[OAHMAC_SHA1SignatureProvider alloc] init];
 		else 
-			signatureProvider = [aProvider retain];
+			signatureProvider = aProvider;
 		
 		[self _generateTimestamp];
 		[self _generateNonce];
@@ -90,42 +90,31 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 					  cachePolicy:NSURLRequestReloadIgnoringCacheData
 				  timeoutInterval:10.0])
 	{    
-		consumer = [aConsumer retain];
+		consumer = aConsumer;
 		
 		// empty token for Unauthorized Request Token transaction
 		if (aToken == nil)
 			token = [[OAToken alloc] init];
 		else
-			token = [aToken retain];
+			token = aToken;
 		
 		if (aRealm == nil)
-			realm = [[NSString alloc] initWithString:@""];
+			realm = @"";
 		else 
-			realm = [aRealm retain];
+			realm = aRealm;
 		
 		// default to HMAC-SHA1
 		if (aProvider == nil)
 			signatureProvider = [[OAHMAC_SHA1SignatureProvider alloc] init];
 		else 
-			signatureProvider = [aProvider retain];
+			signatureProvider = aProvider;
 		
-		timestamp = [aTimestamp retain];
-		nonce = [aNonce retain];
+		timestamp = aTimestamp;
+		nonce = aNonce;
 	}
     return self;
 }
 
-- (void)dealloc
-{
-	[consumer release];
-	[token release];
-	[realm release];
-	[signatureProvider release];
-	[timestamp release];
-	[nonce release];
-	[extraOAuthParameters release];
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark Public
@@ -196,15 +185,14 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
 
 - (void)_generateTimestamp 
 {
-    timestamp = [[NSString alloc] initWithFormat:@"%d", time(NULL)];
+    timestamp = [[NSString alloc] initWithFormat:@"%ld", time(NULL)];
 }
 
 - (void)_generateNonce 
 {
-    [nonce release];
     
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
-    nonce = (NSString*)CFUUIDCreateString(NULL, theUUID);
+    nonce = (NSString*)CFBridgingRelease(CFUUIDCreateString(NULL, theUUID));
     CFRelease(theUUID);
 }
 

@@ -12,7 +12,7 @@
 
 - (id)initWithKeychainUsingAppName:(NSString *)name serviceProviderName:(NSString *)provider 
 {
-    [super init];
+    if (!(self = [super init])) return nil;
     SecKeychainItemRef item;
 	NSString *serviceName = [NSString stringWithFormat:@"%@::OAuth::%@", name, provider];
 	OSStatus status = SecKeychainFindGenericPassword(NULL,
@@ -44,9 +44,9 @@
     status = SecKeychainItemCopyContent(item, NULL, &list, &length, (void **)&password);
     
     if (status == noErr) {
-        self.key = [[[NSString alloc] initWithBytes:list.attr[0].data
+        self.key = [[NSString alloc] initWithBytes:list.attr[0].data
                                              length:list.attr[0].length
-                                           encoding:NSUTF8StringEncoding] autorelease];
+                                           encoding:NSUTF8StringEncoding];
         if (password != NULL) {
             char passwordBuffer[1024];
             
@@ -67,7 +67,7 @@
         return nil;
     }
     
-    NSMakeCollectable(item);
+    CFBridgingRelease(item);
     
     return self;
 }

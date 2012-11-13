@@ -30,34 +30,30 @@
 
 + (id)asynchronousFetcherWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector
 {
-	return [[[OAAsynchronousDataFetcher alloc] initWithRequest:aRequest delegate:aDelegate didFinishSelector:finishSelector didFailSelector:failSelector] autorelease];
+	return [[OAAsynchronousDataFetcher alloc] initWithRequest:aRequest delegate:aDelegate didFinishSelector:finishSelector didFailSelector:failSelector];
 }
 
 - (id)initWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector
 {
-	if (self = [super init])
+	if ((self = [super init]))
 	{
-		request = [aRequest retain];
+		request = aRequest;
 		delegate = aDelegate;
 		didFinishSelector = finishSelector;
-		didFailSelector = failSelector;	
+		didFailSelector = failSelector;
 	}
 	return self;
 }
 
 - (void)start
-{    
+{
     [request prepare];
 	
-	if (connection)
-		[connection release];
 	
 	connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
     
 	if (connection)
 	{
-		if (responseData)
-			[responseData release];
 		responseData = [[NSMutableData alloc] init];
 	}
 	else
@@ -65,10 +61,12 @@
         OAServiceTicket *ticket= [[OAServiceTicket alloc] initWithRequest:request
                                                                  response:nil
                                                                didSucceed:NO];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
         [delegate performSelector:didFailSelector
                        withObject:ticket
                        withObject:nil];
-		[ticket release];
+#pragma clang diagnostic pop
 	}
 }
 
@@ -77,28 +75,17 @@
 	if (connection)
 	{
 		[connection cancel];
-		[connection release];
 		connection = nil;
 	}
 }
 
-- (void)dealloc
-{
-	[request release];
-	[connection release];
-	[response release];
-	[responseData release];
-	[super dealloc];
-}
 
 #pragma mark -
 #pragma mark NSURLConnection methods
 
 - (void)connection:(NSURLConnection *)aConnection didReceiveResponse:(NSHTTPURLResponse *)aResponse
 {
-	if (response)
-		[response release];
-	response = [aResponse retain];
+	response = aResponse;
 	[responseData setLength:0];
 }
 
@@ -112,11 +99,13 @@
 	OAServiceTicket *ticket= [[OAServiceTicket alloc] initWithRequest:request
 															 response:response
 														   didSucceed:NO];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 	[delegate performSelector:didFailSelector
 				   withObject:ticket
 				   withObject:error];
+#pragma clang diagnostic pop
 	
-	[ticket release];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)aConnection
@@ -126,17 +115,18 @@
 															didSucceed:[response statusCode] < 400];
     
     NSStringEncoding encoding = NSISOLatin1StringEncoding;
-    NSString *contentType = [[[response allHeaderFields] objectForKey:@"Content-Type"] lowercaseString];
+    NSString *contentType = [[response allHeaderFields][@"Content-Type"] lowercaseString];
     if (contentType && [contentType rangeOfString:@"charset=utf-8"].location != NSNotFound) {
         encoding = NSUTF8StringEncoding;
     }
-    NSString *responseString = [[[NSString alloc] initWithData:responseData encoding:encoding] autorelease];
-    
+    NSString *responseString = [[NSString alloc] initWithData:responseData encoding:encoding];
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 	[delegate performSelector:didFinishSelector
 				   withObject:ticket
 				   withObject:responseString];
+#pragma clang diagnostic pop
 	
-	[ticket release];
 }
 
 @end

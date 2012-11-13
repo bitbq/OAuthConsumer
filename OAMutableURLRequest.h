@@ -44,8 +44,8 @@
     NSString *timestamp;
 	NSMutableDictionary *extraOAuthParameters;
 }
-@property(retain, readonly) NSString *signature;
-@property(retain, readonly) NSString *nonce;
+@property(strong, readonly) NSString *signature;
+@property(strong, readonly) NSString *nonce;
 
 - (id)initWithURL:(NSURL *)aUrl
 		 consumer:(OAConsumer *)aConsumer

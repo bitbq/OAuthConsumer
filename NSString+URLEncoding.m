@@ -28,24 +28,22 @@
 
 @implementation NSString (OAURLEncodingAdditions)
 
-- (NSString *)URLEncodedString 
+- (NSString *)URLEncodedString
 {
-    NSString *result = (NSString *)NSMakeCollectable(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
-                                                                           (CFStringRef)self,
-                                                                           NULL,
-																		   CFSTR("!*'();:@&=+$,/?%#[]"),
-                                                                           kCFStringEncodingUTF8));
-    [result autorelease];
+    NSString *result = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(kCFAllocatorDefault,
+                                                                                             (CFStringRef)self,
+                                                                                             NULL,
+                                                                                             CFSTR("!*'();:@&=+$,/?%#[]"),
+                                                                                             kCFStringEncodingUTF8));
 	return result;
 }
 
 - (NSString*)URLDecodedString
 {
-	NSString *result = (NSString *)NSMakeCollectable(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
-																						   (CFStringRef)self,
-																						   CFSTR(""),
-																						   kCFStringEncodingUTF8));
-    [result autorelease];
+	NSString *result = (NSString *)CFBridgingRelease(CFURLCreateStringByReplacingPercentEscapesUsingEncoding(kCFAllocatorDefault,
+                                                                                                             (CFStringRef)self,
+                                                                                                             CFSTR(""),
+                                                                                                             kCFStringEncodingUTF8));
 	return result;	
 }
 
