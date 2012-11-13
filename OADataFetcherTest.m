@@ -34,7 +34,7 @@
     NSString *serverPath = [currentDir stringByAppendingPathComponent:@"OATestServer.rb"];
     
     server = [[NSTask alloc] init];
-    [server setArguments:[NSArray arrayWithObject:serverPath]];
+    [server setArguments:@[serverPath]];
     [server setLaunchPath:@"/usr/bin/ruby"];
     [server launch];
     sleep(2); // let the server get ready to respond

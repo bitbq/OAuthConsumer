@@ -56,7 +56,7 @@
             strncpy(passwordBuffer, password, length);
             
             passwordBuffer[length] = '\0';
-            self.secret = [NSString stringWithUTF8String:passwordBuffer];
+            self.secret = @(passwordBuffer);
         }
         
         SecKeychainItemFreeContent(&list, password);

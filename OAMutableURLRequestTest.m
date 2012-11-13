@@ -60,8 +60,8 @@
                                              signatureProvider:hmacSha1Provider
                                                          nonce:@"kllo9940pd9333jh"
                                                      timestamp:@"1191242096"];
-    [hmacSha1Request setParameters:[NSArray arrayWithObjects:[[OARequestParameter alloc] initWithName:@"file" value:@"vacation.jpg"],
-                                   [[OARequestParameter alloc] initWithName:@"size" value:@"original"], nil]];
+    [hmacSha1Request setParameters:@[[[OARequestParameter alloc] initWithName:@"file" value:@"vacation.jpg"],
+                                   [[OARequestParameter alloc] initWithName:@"size" value:@"original"]]];
     
 }
 
@@ -73,7 +73,7 @@
     for (i = 0; i < nonceTolerance; i++) {
         [plaintextRequest _generateNonce];
         NSString *nonce = [plaintextRequest nonce];
-        [hash setObject:@"" forKey:nonce];
+        hash[nonce] = @"";
     }
     
     STAssertEquals(nonceTolerance, [hash count], @"Nonce collision with %d requests", nonceTolerance);
