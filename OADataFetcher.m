@@ -65,4 +65,33 @@
     }
 }
 
+- (void)fetchDataWithRequest:(OAMutableURLRequest *)request didFinishHandler:(OADataFetcherDidFinishHandlerBlock)finishHandler didFailHandler:(OADataFetcherDidFailHandlerBlock)failHandler
+{
+    [request prepare];
+    
+    NSError *error = nil;
+    NSHTTPURLResponse *response = nil;
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request
+                                                 returningResponse:&response
+                                                             error:&error];
+	
+    if (response == nil || responseData == nil || error != nil) {
+        OAServiceTicket *ticket= [[OAServiceTicket alloc] initWithRequest:request
+                                                                 response:response
+                                                               didSucceed:NO];
+        if (failHandler)
+        {
+            failHandler(ticket, error);
+        }
+    } else {
+        OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request
+                                                                  response:response
+                                                                didSucceed:[(NSHTTPURLResponse *)response statusCode] < 400];
+        if (finishHandler)
+        {
+            finishHandler(ticket, responseData);
+        }
+    }
+}
+
 @end

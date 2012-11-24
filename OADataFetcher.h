@@ -27,9 +27,14 @@
 #import "OAMutableURLRequest.h"
 #import "OAServiceTicket.h"
 
+typedef void(^OADataFetcherDidFinishHandlerBlock)(OAServiceTicket *ticket, NSData *responseData);
+typedef void(^OADataFetcherDidFailHandlerBlock)(OAServiceTicket *ticket, NSError *error);
 
 @interface OADataFetcher : NSObject
 
+//TODO:Remove this method
 - (void)fetchDataWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector;
+
+- (void)fetchDataWithRequest:(OAMutableURLRequest *)request didFinishHandler:(OADataFetcherDidFinishHandlerBlock)finishHandler didFailHandler:(OADataFetcherDidFailHandlerBlock)failHandler;
 
 @end
