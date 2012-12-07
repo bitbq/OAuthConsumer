@@ -47,6 +47,8 @@
 @property(strong, readonly) NSString *signature;
 @property(strong, readonly) NSString *nonce;
 
+- (id)initWithURL:(NSURL *)aUrl consumer:(OAConsumer *)aConsumer token:(OAToken *)aToken;
+
 - (id)initWithURL:(NSURL *)aUrl
 		 consumer:(OAConsumer *)aConsumer
 			token:(OAToken *)aToken

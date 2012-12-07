@@ -41,6 +41,11 @@
 
 #pragma mark init
 
+- (id)initWithURL:(NSURL *)aUrl consumer:(OAConsumer *)aConsumer token:(OAToken *)aToken
+{
+    return [self initWithURL:aUrl consumer:aConsumer token:aToken realm:nil signatureProvider:nil];
+}
+
 - (id)initWithURL:(NSURL *)aUrl
 		 consumer:(OAConsumer *)aConsumer
 			token:(OAToken *)aToken
