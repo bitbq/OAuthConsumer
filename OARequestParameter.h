@@ -31,10 +31,12 @@
 @interface OARequestParameter : NSObject {
 @protected
     NSString *name;
-    NSString *value;
+    id value;
 }
 @property(retain) NSString *name;
-@property(retain) NSString *value;
+@property(retain) id value;
+@property(retain) NSMutableDictionary *multipartHeaders;
+@property(retain) NSString *multipartFilename;
 
 + (id)requestParameterWithName:(NSString *)aName value:(NSString *)aValue;
 - (id)initWithName:(NSString *)aName value:(NSString *)aValue;

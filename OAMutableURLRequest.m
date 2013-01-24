@@ -208,11 +208,15 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
     CFRelease(theUUID);
 }
 
+- (BOOL)hasBody {
+    return [[self HTTPMethod] isEqualToString:@"PUT"] || [[self HTTPMethod] isEqualToString:@"POST"];
+}
+
 - (NSString *)_signatureBaseString 
 {
     // OAuth Spec, Section 9.1.1 "Normalize Request Parameters"
     // build a sorted array of both request parameters and OAuth header parameters
-    NSMutableArray *parameterPairs = [NSMutableArray  arrayWithCapacity:(6 + [[self OAParameters] count])]; // 6 being the number of OAuth params in the Signature Base String
+    NSMutableArray *parameterPairs = [NSMutableArray array];
     
 	[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_consumer_key" value:consumer.key] URLEncodedNameValuePair]];
 	[parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_signature_method" value:[signatureProvider name]] URLEncodedNameValuePair]];
@@ -224,8 +228,10 @@ signatureProvider:(id<OASignatureProviding, NSObject>)aProvider
         [parameterPairs addObject:[[OARequestParameter requestParameterWithName:@"oauth_token" value:token.key] URLEncodedNameValuePair]];
     }
     
-    for (OARequestParameter *param in [self OAParameters]) {
-        [parameterPairs addObject:[param URLEncodedNameValuePair]];
+    if ( ![self hasBody] || [[[self valueForHTTPHeaderField:@"Content-Type"] lowercaseString] isEqualToString:@"application/x-www-form-urlencoded"] ) {
+        for (OARequestParameter *param in [self OAParameters]) {
+            [parameterPairs addObject:[param URLEncodedNameValuePair]];
+        }
     }
     
     if (extraOAuthParameters) {

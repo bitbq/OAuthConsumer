@@ -24,75 +24,111 @@
 
 
 #import "NSMutableURLRequest+Parameters.h"
+#import <objc/runtime.h>
 
+static NSString *OAParametersKey = @"OAParametersKey";
+
+@interface NSString (UUID)
++ (NSString*)stringWithUUID;
+@end
+
+@implementation NSString (UUID)
+
++ (NSString*)stringWithUUID {
+    CFUUIDRef	uuidObj = CFUUIDCreate(nil);
+    NSString	*uuidString = (NSString*)CFUUIDCreateString(nil, uuidObj);
+    CFRelease(uuidObj);
+    
+    return [uuidString autorelease];
+}
+
+@end
 
 @implementation NSMutableURLRequest (OAParameterAdditions)
 
 - (NSArray *)OAParameters
 {
-    NSString *encodedParameters;
-	BOOL shouldfree = NO;
-    
-    if ([[self HTTPMethod] isEqualToString:@"GET"] || [[self HTTPMethod] isEqualToString:@"DELETE"]) 
-        encodedParameters = [[self URL] query];
-	else 
-	{
-        // POST, PUT
-		shouldfree = YES;
-        encodedParameters = [[NSString alloc] initWithData:[self HTTPBody] encoding:NSASCIIStringEncoding];
-    }
-    
-    if ((encodedParameters == nil) || ([encodedParameters isEqualToString:@""]))
-	{
-		if (shouldfree) 
-		{
-			[encodedParameters release];
-		}
-		return nil;
-	}
-    
-    NSArray *encodedParameterPairs = [encodedParameters componentsSeparatedByString:@"&"];
-    NSMutableArray *requestParameters = [[NSMutableArray alloc] initWithCapacity:16];
-    
-    for (NSString *encodedPair in encodedParameterPairs) 
-	{
-        NSArray *encodedPairElements = [encodedPair componentsSeparatedByString:@"="];
-        OARequestParameter *parameter = [OARequestParameter requestParameterWithName:[[encodedPairElements objectAtIndex:0] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]
-																			   value:[[encodedPairElements objectAtIndex:1] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-        [requestParameters addObject:parameter];
-    }
-    
-	// Cleanup
-	if (shouldfree)
-		[encodedParameters release];
-	
-    return [requestParameters autorelease];
+    return objc_getAssociatedObject(self, OAParametersKey);
 }
 
-- (void)setOAParameters:(NSArray *)parameters 
+- (void)setOAParameters:(NSArray *)parameters {
+    [self setOAParameters:parameters multipart:NO];
+}
+
+- (void)setOAParameters:(NSArray *)parameters multipart:(BOOL)multipart
 {
-    NSMutableString *encodedParameterPairs = [NSMutableString stringWithCapacity:256];
-    
-    int position = 1;
-    for (OARequestParameter *requestParameter in parameters) 
-	{
-        [encodedParameterPairs appendString:[requestParameter URLEncodedNameValuePair]];
-        if (position < [parameters count])
-            [encodedParameterPairs appendString:@"&"];
-		
-        position++;
-    }
-    
-    if ([[self HTTPMethod] isEqualToString:@"GET"] || [[self HTTPMethod] isEqualToString:@"DELETE"])
-        [self setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", [[self URL] URLStringWithoutQuery], encodedParameterPairs]]];
-    else 
-	{
-        // POST, PUT
-        NSData *postData = [encodedParameterPairs dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+    if (multipart) {
+        
+        NSString *boundary = [NSString stringWithUUID];
+        NSString *contentType = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+        [self setValue:contentType forHTTPHeaderField:@"Content-Type"];
+        
+        NSMutableData *postData = [NSMutableData data];
+        for (OARequestParameter *requestParameter in parameters) {
+            NSMutableDictionary *subHeaders = [requestParameter.multipartHeaders copy];
+            if (subHeaders == nil) {
+                subHeaders = [[NSMutableDictionary alloc] init];
+            }
+            
+            NSMutableString *contentDisposition = [subHeaders objectForKey:@"Content-Disposition"];
+            if (contentDisposition == nil) {
+                contentDisposition = [NSMutableString stringWithFormat:@"form-data; name=\"%@\"", requestParameter.name];
+                if (requestParameter.multipartFilename != nil) {
+                    [contentDisposition appendFormat:@"; filename=\"%@\"", requestParameter.multipartFilename];
+                }
+                [subHeaders setObject:contentDisposition forKey:@"Content-Disposition"];
+            }
+            
+            if ([subHeaders objectForKey:@"Content-Type"] == nil && ([requestParameter.multipartFilename length] > 0 || [requestParameter.value isKindOfClass:[NSData class]])) {
+                [subHeaders setObject:@"application/octet-stream" forKey:@"Content-Type"];
+            }
+            
+            [postData appendData:[[NSString stringWithFormat:@"--%@\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            [subHeaders enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
+                [postData appendData:[[NSString stringWithFormat:@"%@: %@\r\n", key, obj] dataUsingEncoding:NSUTF8StringEncoding]];
+            }];
+            [postData appendData:[@"\r\n" dataUsingEncoding:NSUTF8StringEncoding]];
+            
+            NSData *data;
+            if ([requestParameter.value isKindOfClass:[NSData class]]) {
+                data = requestParameter.value;
+            } else {
+                data = [[NSString stringWithFormat:@"%@\r\n", requestParameter.value] dataUsingEncoding:NSUTF8StringEncoding];
+            }
+            [postData appendData:data];
+        }
+        [postData appendData:[[NSString stringWithFormat:@"--%@--\r\n", boundary] dataUsingEncoding:NSUTF8StringEncoding]];
+        
         [self setHTTPBody:postData];
-        [self setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
-        [self setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        
+    } else {
+        
+        NSMutableString *encodedParameterPairs = [NSMutableString stringWithCapacity:256];
+        
+        int position = 1;
+        for (OARequestParameter *requestParameter in parameters)
+        {
+            [encodedParameterPairs appendString:[requestParameter URLEncodedNameValuePair]];
+            if (position < [parameters count])
+                [encodedParameterPairs appendString:@"&"];
+            
+            position++;
+        }
+        
+        if ([[self HTTPMethod] isEqualToString:@"GET"] || [[self HTTPMethod] isEqualToString:@"DELETE"]) {
+            [self setURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@?%@", [[self URL] URLStringWithoutQuery], encodedParameterPairs]]];
+        } else {
+            // POST, PUT
+            NSData *postData = [encodedParameterPairs dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+            [self setHTTPBody:postData];
+            [self setValue:[NSString stringWithFormat:@"%d", [postData length]] forHTTPHeaderField:@"Content-Length"];
+            [self setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+        }
+
     }
+    
+    objc_setAssociatedObject(self, OAParametersKey, parameters, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 @end

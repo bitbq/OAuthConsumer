@@ -30,6 +30,7 @@
 @interface NSMutableURLRequest (OAParameterAdditions)
 
 - (NSArray *)OAParameters;
+- (void)setOAParameters:(NSArray *)parameters multipart:(BOOL)multipart;
 - (void)setOAParameters:(NSArray *)parameters;
 
 @end

@@ -29,6 +29,8 @@
 
 @implementation OARequestParameter
 @synthesize name, value;
+@synthesize multipartFilename = _multipartFilename;
+@synthesize multipartHeaders = _multipartHeaders;
 
 + (id)requestParameterWithName:(NSString *)aName value:(NSString *)aValue 
 {
@@ -49,6 +51,9 @@
 {
 	[name release];
 	[value release];
+    [_multipartFilename release];
+    [_multipartHeaders release];
+    
 	[super dealloc];
 }
 
