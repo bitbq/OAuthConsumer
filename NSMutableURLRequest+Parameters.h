@@ -25,7 +25,6 @@
 #import <Foundation/Foundation.h>
 #import "OARequestParameter.h"
 #import "NSURL+Base.h"
-#import "hide_symbols_oauth.h"
 
 @interface NSMutableURLRequest (OAParameterAdditions)
 

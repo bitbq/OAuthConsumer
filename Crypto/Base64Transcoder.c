@@ -29,8 +29,6 @@
 
 #include <math.h>
 #include <string.h>
-#import "hide_symbols_oauth.h"
-
 
 const u_int8_t kBase64EncodeTable[64] = {
 	/*  0 */ 'A',	/*  1 */ 'B',	/*  2 */ 'C',	/*  3 */ 'D', 
