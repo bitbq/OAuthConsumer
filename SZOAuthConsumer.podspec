@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
-  s.name               = "OAuthConsumer"
+  s.name               = "SZOAuthConsumer"
   s.version            = "0.0.2"
-  s.summary            = "OAuthConsumer."
+  s.summary            = "SZOAuthConsumer."
   s.description        = "OAuthConsumer with changes for socialize-sdk-ios."
   s.homepage           = "https://github.com/socialize/OAuthConsumer"
   s.license            = { :type => 'MIT', :file => 'LICENSE' }
